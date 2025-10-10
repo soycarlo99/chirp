@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('guest')->group(function () {
     Route::view('/register', 'auth.register')->name('register');
     Route::post('/register', Register::class);
+    Route::view('/login', 'auth.register')->name('register');
+    Route::post('/login', Register::class);
+
 });
 
 Route::middleware('auth')->group(function () {
