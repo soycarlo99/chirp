@@ -1,9 +1,11 @@
 <?php
 
+use App\Events\ChirpSent;
 use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
 use App\Http\Controllers\Auth\Register;
 use App\Http\Controllers\ChirpController;
+use App\Models\Chirp;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +37,26 @@ Route::middleware('auth')->group(function () {
         return redirect('/home');
     })->middleware('signed')->name('verification.verify');
 
+});
+
+
+Route::get('/send-chirp', function () {
+    // Sending a simple object instead of a model
+    $chirp = [
+        'message' => 'Hello from Laravel Reverb!',
+        'user_id' => 1,
+    ];
+
+    // $chirp->save();
+
+    // Fire the event
+    broadcast(new ChirpSent($chirp));
+
+    return response()->json(['status' => 'Message broadcasted!']);
+});
+
+Route::get('/receive-data', function () {
+    return view('receive');
 });
 
 // eyJpdiI6InJSQkZ3di9MMHZoaHZtSWM3SXJuUXc9PSIsInZhbHVlIjoiVzJ1Mm9iYVFmSXNzWXdRTVFMOG8wcHkrRFBhaFcxMVJBRU82bkJHU1dPSS9ESW9mQVU0N0QyVXRkKzB2dWdPeU5oVStPR2FHb2hBSVNUWnRQMy9lZHJ1dGRFc3BsdHovSTJGN0RQTC9XMnN6ckFzR2ZuKzNpbmlUTXlVQ0l6VE8iLCJtYWMiOiIyMmEwOWEwZGJiZWRkYmI5ZGQ4ZWEzY2NmOWExN2U2Yjc0NDJmYmY0MzdmZjYzZmM2NDc3ZDVjZWZhNTFjMWY1IiwidGFnIjoiIn0%3D
