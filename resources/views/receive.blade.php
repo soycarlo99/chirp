@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reverb Broadcast</title>
     @vite(['resources/js/app.js']) {{-- Load JS --}}
 </head>
+
 <body>
     <h1>Listening for Messages...</h1>
     <pre id="output"></pre>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             window.Echo.channel("public-chirps")
                 .listen(".chirp.sent", (event) => {
                     console.log("Received:", event);
@@ -20,4 +22,5 @@
         });
     </script>
 </body>
+
 </html>

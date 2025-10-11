@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ChirpSent;
 use App\Models\Chirp;
 use Illuminate\Http\Request;
-use App\Events\ChirpSent;
 
 class ChirpController extends Controller
 {
@@ -38,7 +38,7 @@ class ChirpController extends Controller
 
         // Use the authenticated user
         $chirp = auth()->user()->chirps()->create($validated);
-        // broadcast(new ChirpSent($chirp));
+        broadcast(new ChirpSent($chirp));
 
         return redirect('/')->with('success', 'Your chirp has been posted!');
     }
